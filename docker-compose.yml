@@ -5,7 +5,7 @@ services:
     image: prosen25/vprofiledb
     container_name: vprodb
     environment:
-      - MYSQL_ROOT_PASSWORD=admin123
+      - MYSQL_ROOT_PASSWORD=vprodbpass
     ports:
       - "3306:3306"
     volumes:
@@ -21,8 +21,8 @@ services:
     ports:
       - "5672:5672"
     environment:
-      - RABBITMQ_DEFAULT_USER=test
-      - RABBITMQ_DEFAULT_PASS=test
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
 
   vproapp:
     build: ./Docker-files/app
