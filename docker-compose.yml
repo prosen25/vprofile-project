@@ -4,25 +4,25 @@ services:
     build: ./Docker-files/db
     image: prosen25/vprofiledb
     container_name: vprodb
+    environment:
+      - MYSQL_ROOT_PASSWORD: admin123
     ports:
       - "3306:3306"
     volumes:
-      - vprodbdata:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=vprodbpass  
+      - vprodbdata: /var/lib/mysql
   
-  vprocache01:
+  vprocache:
     image: memcached
     ports:
       - "11211:11211"
-  
-  vpromq01:
+
+  vprormq:
     image: rabbitmq
     ports:
-      - "15672:15672"
+      - "5672:5672"
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_USER: test
+      - RABBITMQ_DEFAULT_PASS: test
 
   vproapp:
     build: ./Docker-files/app
@@ -31,8 +31,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - vproappdata:/usr/local/tomcat/webapps
-    
+      - vproappdata: /usr/local/tomcat/webapps
+
   vproweb:
     build: ./Docker-files/web
     image: prosen25/vprofileweb
