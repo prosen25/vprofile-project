@@ -11,15 +11,15 @@ services:
     volumes:
       - vprodbdata:/var/lib/mysql
   
-  vprocache:
+  vprocache01:
     image: memcached
     ports:
       - "11211:11211"
 
-  vprormq:
+  vpromq01:
     image: rabbitmq
     ports:
-      - "5672:5672"
+      - "15672:15672"
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
