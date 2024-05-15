@@ -27,10 +27,14 @@ pipeline {
             }
         }
         stage('Test') {
-            sh 'mvn -s $MAVEN_SETTINGS test'
+            steps {
+                sh 'mvn -s $MAVEN_SETTINGS test'
+            }
         }
         stage('Checkstyle analysis') {
-            sh 'mvn -s $MAVEN_SETTINGS checkstyle:checkstyle'
+            steps {
+                sh 'mvn -s $MAVEN_SETTINGS checkstyle:checkstyle'
+            }
         }
     }
 
