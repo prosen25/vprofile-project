@@ -15,11 +15,18 @@ pipeline {
         SONAR_SCANNER = 'sonarscanner'
         SONAR_SERVER = 'sonarserver'
         NEXUS_CREDENTIALS_ID = 'nexuslogin'
-        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-            // Just to retrieve the user name and password for nexus login used in settings.xml
-        }
     }
     stages {
+        stage('Retrieve Nexus credentials') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        env.NEXUS_USER = "${NEXUS_USER}"
+                        env.NEXUS_PASSWORD = "${NEXUS_PASSWORD}"
+                    }
+                }
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -s $MAVEN_SETTINGS -DskipTest clean install'
