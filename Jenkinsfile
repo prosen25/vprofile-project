@@ -18,15 +18,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building artifact...'
                 sh 'mvn -s $MAVEN_SETTINGS -DskipTest clean install'
             }
             post {
                 success {
-                    echo 'Archiving artifacts...'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
+        }
+        stage('Test') {
+            sh 'mvn -s $MAVEN_SETTINGS test'
+        }
+        stage('Checkstyle analysis') {
+            sh 'mvn -s $MAVEN_SETTINGS checkstyle:checkstyle'
         }
     }
 
