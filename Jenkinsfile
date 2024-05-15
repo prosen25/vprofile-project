@@ -7,8 +7,6 @@ pipeline {
     environment {
         NEXUSIP = '172.31.51.193'
         NEXUSPORT = '8081'
-        NEXUS_USER = 'admin'
-        NEXUS_PASS = 'admin123'
         RELEASE_REPO = 'vpro-release'
         CENTRAL_REPO = 'vpro-central'
         SNAP_REPO = 'vpro-snapshot'
@@ -17,6 +15,9 @@ pipeline {
         SONAR_SCANNER = 'sonarscanner'
         SONAR_SERVER = 'sonarserver'
         NEXUS_CREDENTIALS_ID = 'nexuslogin'
+        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+            // Just to retrieve the user name and password for nexus login used in settings.xml
+        }
     }
     stages {
         stage('Build') {
