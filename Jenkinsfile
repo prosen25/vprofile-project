@@ -40,7 +40,7 @@ pipeline {
         }
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('${SONAR_SERVER}', envOnly: true) {
+                withSonarQubeEnv("${SONAR_SERVER}", envOnly: true) {
                     sh '${SONAR_SCANNER}/bin/sonar-scanner \
                     -Dsonar.projectKey=vprofile \
                     -Dsonar.projectName=vprofile \
