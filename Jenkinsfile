@@ -16,6 +16,7 @@ pipeline {
         MAVEN_SETTINGS = 'settings.xml'
         SONAR_SCANNER = 'sonarscanner'
         SONAR_SERVER = 'sonarserver'
+        NEXUS_CREDENTIALS_ID = 'nexuslogin'
     }
     stages {
         stage('Build') {
@@ -63,6 +64,26 @@ pipeline {
                     // true = set pipeline to UNSTABLE, false = don't
                     waitForQualityGate abortPipeline: true
                 }
+            }
+        }
+        stage('Upload artifacts Nexus') {
+            steps {
+                // Upload artifacts to Nexus
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
+                    groupId: 'QA',
+                    version: ${env.BUILD_ID}-${BUILD_TIMESTAMP},
+                    repository: "${RELEASE_REPO}",
+                    credentialsId: "${NEXUS_CREDENTIALS_ID}",
+                    artifacts: [
+                        [artifactId: 'vproapp',
+                        classifier: '',
+                        file: 'target/vprofile-v2.war',
+                        type: 'war']
+                    ]
+                )
             }
         }
     }
