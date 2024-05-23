@@ -5,7 +5,7 @@ pipeline {
         jdk 'OracleJDK11'
     }
     environment {
-        NEXUSIP = '3.92.30.150'
+        NEXUSIP = '172.31.44.37'
         NEXUSPORT = '8081'
         RELEASE_REPO = 'vprofile-release'
         CENTRAL_REPO = 'vpro-maven-central'
