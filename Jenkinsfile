@@ -9,7 +9,7 @@ pipeline {
         NEXUSPORT = '8081'
         RELEASE_REPO = 'vprofile-release'
         CENTRAL_REPO = 'vpro-maven-central'
-        SNAP_REPO = '   vprofile-snapshot'
+        SNAP_REPO = 'vprofile-snapshot'
         NEXUS_GRP_REPO = 'vpro-maven-group'
         MAVEN_SETTINGS = 'settings.xml'
         SONAR_SCANNER = 'sonarscanner'
