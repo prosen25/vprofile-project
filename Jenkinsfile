@@ -22,14 +22,9 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
                         env.NEXUS_USER = "${NEXUS_USER}"
-                        env.NEXUS_PASSWORD = "${NEXUS_PASSWORD}"
+                        env.NEXUS_PASS = "${NEXUS_PASSWORD}"
                     }
                 }
-            }
-        }
-        stage('Get credentials') {
-            steps {
-                sh 'mvn help:effective-settings -DshowPasswords=true'
             }
         }
         stage('Build') {
