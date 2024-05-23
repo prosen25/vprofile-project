@@ -27,6 +27,11 @@ pipeline {
                 }
             }
         }
+        stage('Get credentials') {
+            steps {
+                sh 'mvn help:effective-settings -DshowPasswords=true'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -s $MAVEN_SETTINGS -DskipTest clean install'
