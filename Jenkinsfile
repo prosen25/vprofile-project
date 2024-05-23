@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -s $MAVEN_SETTINGS -DskipTest clean install'
+                sh 'mvn -DskipTest clean install'
             }
             post {
                 success {
