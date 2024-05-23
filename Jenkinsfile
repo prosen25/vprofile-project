@@ -5,12 +5,12 @@ pipeline {
         jdk 'OracleJDK11'
     }
     environment {
-        NEXUSIP = '172.31.51.193'
+        NEXUSIP = '172.31.44.37'
         NEXUSPORT = '8081'
-        RELEASE_REPO = 'vpro-release'
-        CENTRAL_REPO = 'vpro-central'
-        SNAP_REPO = 'vpro-snapshot'
-        NEXUS_GRP_REPO = 'vpro-group'
+        RELEASE_REPO = 'vprofile-release'
+        CENTRAL_REPO = 'vpro-maven-central'
+        SNAP_REPO = '   vprofile-snapshot'
+        NEXUS_GRP_REPO = 'vpro-maven-group'
         MAVEN_SETTINGS = 'settings.xml'
         SONAR_SCANNER = 'sonarscanner'
         SONAR_SERVER = 'sonarserver'
