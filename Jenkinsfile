@@ -17,16 +17,16 @@ pipeline {
         NEXUS_CREDENTIALS_ID = 'nexuslogin'
     }
     stages {
-#        stage('Retrieve Nexus credentials') {
-#            steps {
-#                script {
-#                    withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
-#                        env.NEXUS_USER = "${NEXUS_USER}"
-#                        env.NEXUS_PASSWORD = "${NEXUS_PASSWORD}"
-#                    }
-#                }
-#            }
-#        }
+        stage('Retrieve Nexus credentials') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        env.NEXUS_USER = "${NEXUS_USER}"
+                        env.NEXUS_PASSWORD = "${NEXUS_PASSWORD}"
+                    }
+                }
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -s $MAVEN_SETTINGS -DskipTest clean install'
