@@ -5,7 +5,7 @@ pipeline {
         jdk 'OracleJDK11'
     }
     environment {
-        NEXUSIP = '172.31.44.37'
+        NEXUSIP = '3.92.30.150'
         NEXUSPORT = '8081'
         RELEASE_REPO = 'vprofile-release'
         CENTRAL_REPO = 'vpro-maven-central'
@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -DskipTest clean install'
+                sh 'mvn -s $MAVEN_SETTINGS -DskipTest clean install'
             }
             post {
                 success {
