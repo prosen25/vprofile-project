@@ -110,7 +110,8 @@ pipeline {
                 script {
                     // Build the Docker image
                     echo "Building docker image"
-                    dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:$BUILD_NUMBER", "./Docker-files/app/multistage/")
+                    dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${env.BUILD_NUMBER}", "./Docker-files/app/multistage/")
+                    echo dockerImage
                 }
             }
         }
@@ -120,7 +121,7 @@ pipeline {
                 script {
                     // Push the Docker image to AWS ECR
                     docker.withRegistry("https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com", "ecr:${AWS_REGION}:${REGISTRY_CREDENTIAL}") {
-                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push("${env.BUILD_NUMBER}")
                         dockerImage.push("latest")
                     }
                 }
