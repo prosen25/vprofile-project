@@ -19,6 +19,8 @@ pipeline {
         AWS_REGION = 'us-east-1'
         ECR_REPO_NAME = 'vprofileappimg'
         REGISTRY_CREDENTIAL = 'awscreds'
+        ECS_CLUSTER_NAME = 'vprofile-staging'
+        ECS_SERVICE_NAME = 'vpro-app-stage-svc'
     }
     stages {
         stage('Retrieve Nexus credentials') {
@@ -125,13 +127,21 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to ECS') {
+            steps {
+                withAWS(credentials: "${REGISTRY_CREDENTIAL}", region: "${AWS_REGION}") {
+                    sh 'aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --force-new-deployment'
+                }
+            }
+        }
     }
 
     post {
-        // always {
+        always {
             // Clean up the local Docker images to free up space
-            // sh 'docker system prune -f'
-        // }
+            sh 'docker system prune -f'
+        }
 
         success {
             echo 'Docker image pushed successfully to ECR'
