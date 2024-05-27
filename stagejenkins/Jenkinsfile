@@ -128,7 +128,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to ECS') {
+        stage('Deploy to Stage ECS') {
             steps {
                 withAWS(credentials: "${REGISTRY_CREDENTIAL}", region: "${AWS_REGION}") {
                     sh 'aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --force-new-deployment'
@@ -144,11 +144,11 @@ pipeline {
         }
 
         success {
-            echo 'Docker image pushed successfully to ECR'
+            echo 'Docker image deployed successfully to ECS'
         }
 
         failure {
-            echo 'Failed to push Docker image to ECR'
+            echo 'Failed to deploy Docker image to ECS'
         }
     }
 }
