@@ -109,9 +109,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    echo "Building docker image"
                     dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${env.BUILD_NUMBER}", "./Docker-files/app/multistage/")
-                    echo dockerImage
                 }
             }
         }
@@ -130,10 +128,10 @@ pipeline {
     }
 
     post {
-        always {
+        // always {
             // Clean up the local Docker images to free up space
-            sh 'docker system prune -f'
-        }
+            // sh 'docker system prune -f'
+        // }
 
         success {
             echo 'Docker image pushed successfully to ECR'
